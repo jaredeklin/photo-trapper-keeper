@@ -28,32 +28,18 @@ describe('Client Routes', () => {
 
 describe('API Routes', () => {
 
-  // beforeEach(() => {
-  //   return database.migrate.rollback()
-  //     .then(() => {
-  //       return database.migrate.latest()
-  //         .then(() => {
-  //           return database.seed.run()
-  //         })
-  //     })
-  // })
-
-  beforeEach((done) => {
-    database.migrate.rollback()
-      .then( () => {
-        database.migrate.latest()
-        .then ( () => {
-          return database.seed.run()
-            .then( () => {
-              done();
-            })
-        })
-    })
+  beforeEach(() => {
+    return database.migrate.rollback()
+      .then(() => {
+        return database.migrate.latest()
+          .then(() => {
+            return database.seed.run()
+          })
+      })
   })
 
+
   it('should GET all the photos', (done) => {
-
-
     chai.request(app)
       .get('/api/v1/photos')
       .end((error, response) => {
@@ -81,24 +67,24 @@ describe('API Routes', () => {
       })
   })
 
-  
   it('should POST a photo to the database', (done) => {
     
     chai.request(app)
       .post('/api/v1/photos')
       .send({
-        "title": 'Amazing',
-        "url": 'https://i.imgur.com/MA2D0.jpg'
+        title: 'Amazing',
+        url: 'https://i.imgur.com/MA2D0.jpg'
       })
       .end((error, response) => {
         console.log(response.error)
         response.should.be.json
         response.should.have.status(201)
         response.body.should.be.an('object')
-        // response.body.should.have.property('id', 4)
-        // response.body.should.have.property('name', 'Amazing')
-        // response.body.should.have.property('url', 'https://i.imgur.com/MA2D0.jpg')
+        response.body.should.have.property('id', 4)
+        response.body.should.have.property('name', 'Amazing')
+        response.body.should.have.property('url', 'https://i.imgur.com/MA2D0.jpg')
         done()
       })
   })
+
 });
