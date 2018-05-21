@@ -24,7 +24,7 @@ app.get('/api/v1/photos', (request, response) => {
 app.post('/api/v1/photos', (request, response) => {
   const photo = request.body;
 
-  database('photos').insert(photo, ['title', 'url'])
+  database('photos').insert(photo, ['id', 'title', 'url'])
     .then(photo => response.status(201).json(photo[0]))
     .catch(error => response.status(422).json(error))
 })

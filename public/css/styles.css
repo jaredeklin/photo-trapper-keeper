@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+.upper-section {
+  height: 300px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  margin: auto;
+  width: 25%;
+}
+
+input, 
+.add-photo-btn {
+  width: 100%;
+}
+
+.photo-card {
+  width: 300px;
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.image-output {
+  display: block;
+  margin: auto;
+  width: 250px;
+  height: 250px;
+}
