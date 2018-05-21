@@ -24,6 +24,8 @@ async function addPhoto(event) {
   const photoData = await response.json();
 
   appendPhoto(photoData)
+  $('.title-input').val('')
+  $('.url-input').val('')
 }
 
 async function getPhotos() {
