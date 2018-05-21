@@ -23,13 +23,7 @@ async function addPhoto(event) {
 
   const photoData = await response.json();
 
-  $('.display-photos').append(`
-      <article class="photo-card" data-id=${photoData.id}>
-        <img class="image-output" src=${photoData.url}>
-        <h5 class="title-output">${photoData.title}</h5>
-        <button class="delete-btn">x</button>
-      </article>
-    `)
+  appendPhoto(photoData)
 }
 
 async function getPhotos() {
@@ -39,28 +33,26 @@ async function getPhotos() {
   const photos = await response.json()
 
   photos.forEach(photo => {
-    const { title, url, id } = photo
-
-    $('.display-photos').append(`
-      <article class="photo-card" data-id=${id}>
-        <img class="image-output" src=${url}>
-        <h5 class="title-output">${title}</h5>
-        <button class="delete-btn">x</button>
-      </article>
-    `)
+    appendPhoto(photo)
   })
 }
 
 async function deletePhoto() {
   const id = $(this).parent().data('id')
 
-  const response = await fetch(`/api/v1/photos/${id}`, {
+  await fetch(`/api/v1/photos/${id}`, {
     method: 'DELETE'
   })
 
-  // const deleteData = await response.json()
-
-  // console.log(deleteData)
-
   $(this).parent().remove()
+}
+
+function appendPhoto(photo) {
+  $('.display-photos').append(`
+      <article class="photo-card" data-id=${photo.id}>
+        <img class="image-output" src=${photo.url}>
+        <h5 class="title-output">${photo.title}</h5>
+        <button class="delete-btn">x</button>
+      </article>
+    `)
 }
