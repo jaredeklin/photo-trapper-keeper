@@ -5,7 +5,8 @@
 
 
 .upper-section {
-  height: 300px;
+  height: auto;
+  margin: 50px;
 }
 
 h1 {
@@ -17,15 +18,23 @@ form {
   width: 25%;
 }
 
+h5 {
+  margin: 10px;
+  text-align: center;
+}
+
 input, 
 .add-photo-btn {
   width: 100%;
 }
 
 .photo-card {
+  position: relative;
   width: 300px;
+  height: 300px;
   border: 1px solid black;
   display: inline-block;
+  margin: 10px;
 }
 
 .image-output {
@@ -33,4 +42,10 @@ input,
   margin: auto;
   width: 250px;
   height: 250px;
+}
+
+.delete-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
