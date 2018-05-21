@@ -11,8 +11,8 @@ app.set('port', process.env.PORT || 3000);
 
 app.locals.title = 'Photo Trapper Keeper';
 
-app.use(express.static('public'))
-
+app.use(express.static('public'));
+app.use(bodyParser.json());
 
 
 
