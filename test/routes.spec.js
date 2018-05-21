@@ -29,12 +29,12 @@ describe('Client Routes', () => {
 describe('API Routes', () => {
 
   beforeEach(() => {
-    database.migrate.rollback()
+    return database.migrate.rollback()
       .then(() => {
-        database.migrate.latest()
-      })
-      .then(() => {
-        return database.seed.run()
+        return database.migrate.latest()
+          .then(() => {
+            return database.seed.run()
+          })
       })
   })
 
@@ -56,11 +56,30 @@ describe('API Routes', () => {
       })
   })
 
-  it('should POST a photo to the database', () => {
+  it('should POST a photo to the database', (done) => {
     chai.request(app)
-      .get('/api/v1/photos')
+      .post('/api/v1/photos/')
+      .send({
+        title: 'Amazing',
+        url: 'https://i.imgur.com/MA2D0.jpg'
+      })
       .end((error, response) => {
-        
+        response.should.be.json
+        response.should.have.status(201)
+        // response.body.should.be.an('object')
+        // response.body.should.have.property('id', 4)
+        // response.body.should.have.property('name', '4')
+        // response.body.should.have.property('url', '')
+        done()
       })
   })
+
+  // it('should DELETE a photo from the database', (done) => {
+  //   chai.request(app)
+  //     .delete('/api/v1/photos/3')
+  //     .end((error, response) => {
+  //       response.should.have.status(204)
+  //       done()
+  //     })
+  // })
 });
