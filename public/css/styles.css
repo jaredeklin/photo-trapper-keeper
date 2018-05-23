@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-image: url('https://i.imgur.com/4AodKoZ.jpg');
+  background-size: cover;
+}
 
 .upper-section {
   height: auto;
@@ -37,6 +41,7 @@ input,
   display: inline-block;
   margin: 10px;
   box-shadow: 0 0 5px 0;
+  background-color: white;
 }
 
 .image-output {

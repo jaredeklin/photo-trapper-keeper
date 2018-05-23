@@ -23,23 +23,30 @@ app.get('/api/v1/photos', (request, response) => {
 
 app.post('/api/v1/photos', (request, response) => {
   const photo = request.body;
+  const { title, url } = photo
 
-  database('photos').insert(photo, ['id', 'title', 'url'])
-    .then(photo => response.status(201).json(photo[0]))
-    .catch(error => response.status(422).json(error))
+  if( title && url ) {
+    database('photos').insert(photo, ['id', 'title', 'url'])
+      .then(photo => response.status(201).json(photo[0]))
+      .catch(error => response.status(500).json(error))
+  } else {
+    return response.status(422).json('Title and URL required')
+  }
 })
 
 app.delete('/api/v1/photos/:id', (request, response) => {
-  database('photos').where('id', request.params.id).del()
-    .then(photo => response.status(204).json(request.params.id))
-    .catch(error => response.status(404).json(error))
+
+    database('photos').where('id', request.params.id).del()
+      .then(photo => {
+        if (photo) {
+          response.status(200).json(`Deleted photo id:${request.params.id}`)
+        } else {
+          response.status(404).json('Delete failed. Photo not found')
+        }       
+      })
+      .catch(error => response.status(500).json(error))
+
 })
-
-
-
-
-
-
 
 
 

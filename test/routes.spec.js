@@ -57,18 +57,7 @@ describe('API Routes', () => {
       })
   })
 
-
-  it('should DELETE a photo from the database', (done) => {
-    chai.request(app)
-      .delete('/api/v1/photos/3')
-      .end((error, response) => {
-        response.should.have.status(204)
-        done()
-      })
-  })
-
-  it('should POST a photo to the database', (done) => {
-    
+  it('should POST a photo to the database', (done) => {   
     chai.request(app)
       .post('/api/v1/photos')
       .send({
@@ -76,13 +65,44 @@ describe('API Routes', () => {
         url: 'https://i.imgur.com/MA2D0.jpg'
       })
       .end((error, response) => {
-        console.log(response.error)
         response.should.be.json
         response.should.have.status(201)
         response.body.should.be.an('object')
         response.body.should.have.property('id', 4)
-        response.body.should.have.property('name', 'Amazing')
+        response.body.should.have.property('title', 'Amazing')
         response.body.should.have.property('url', 'https://i.imgur.com/MA2D0.jpg')
+        done()
+      })
+  })
+
+  it('should not POST a photo if the body does not include title and url', (done) => {
+    chai.request(app)
+      .post('/api/v1/photos')
+      .send({ title: 'Stop playin' })
+      .end((error, response) => {
+        response.should.be.json
+        response.should.have.status(422)
+        response.body.should.equal('Title and URL required')
+        done()
+      })
+  })
+
+  it('should DELETE a photo from the database', (done) => {
+    chai.request(app)
+      .del('/api/v1/photos/3')
+      .end((error, response) => {
+        response.should.have.status(200)
+        response.body.should.be.an('string')
+        response.body.should.equal('Deleted photo id:3')
+        done()
+      })
+  })
+
+  it('should return an error message if photo does not exist in database when trying to DELETE', (done) => {
+    chai.request(app)
+      .del('/api/v1/photos/1711')
+      .end((error, response) => {
+        response.should.have.status(404)
         done()
       })
   })
