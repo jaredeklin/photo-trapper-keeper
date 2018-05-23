@@ -103,6 +103,8 @@ describe('API Routes', () => {
       .del('/api/v1/photos/1711')
       .end((error, response) => {
         response.should.have.status(404)
+        response.body.should.be.an('string')
+        response.body.should.equal('Delete failed. Photo not found')
         done()
       })
   })
